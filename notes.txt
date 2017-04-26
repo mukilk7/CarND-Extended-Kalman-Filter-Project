@@ -1,0 +1,13 @@
+* tools.cpp
+	- RMSE [Done]
+	- Jacobian [Done]
+
+* kalman_filter.cpp
+	- Predict
+	- Update (regular kf)
+	- UpdateEKF
+
+* FusionEKF.cpp
+	- FusionEKF
+	- ProcessMeasurement
+
