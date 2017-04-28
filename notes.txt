@@ -4,11 +4,11 @@
 
 * FusionEKF.cpp
 	- FusionEKF [Done]
-	- ProcessMeasurement
+	- ProcessMeasurement [Done]
 
 * kalman_filter.cpp
-	- Predict
-	- Update (regular kf)
-	- UpdateEKF
+	- Predict  [Done]
+	- Update (regular kf) [Done]
+	- UpdateEKF [Done]
 
 
