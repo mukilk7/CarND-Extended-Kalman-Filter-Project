@@ -1,6 +1,7 @@
 #ifndef KALMAN_FILTER_H_
 #define KALMAN_FILTER_H_
 #include <cmath>
+#include <iostream>
 #include "Eigen/Dense"
 
 class KalmanFilter {

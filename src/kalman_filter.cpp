@@ -46,11 +46,12 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 VectorXd CartesianToPolar(const VectorXd &z) {
-  VectorXd polar;
+  VectorXd polar = VectorXd(3);
   float ro = pow( pow(z[0], 2) + pow(z[1], 2), 0.5 );
   float phi = atan2(z[1], (z[0] == 0)? 1: z[0]);
   float rodot = z[0] * z[2] + z[1] * z[3];
   rodot = rodot / ((ro == 0)? 1: ro);
+  //std::cout << "ro = " << ro << ", phi = " << phi << ", rodot = " << rodot << std::endl;
   polar << ro, phi, rodot;
   return polar;
 }
@@ -59,7 +60,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   /**
     * update the state by using Extended Kalman Filter equations
   */
-  VectorXd z_pred = CartesianToPolar(z);
+  VectorXd z_pred = CartesianToPolar(x_);
   VectorXd y = z - z_pred;
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
