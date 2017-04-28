@@ -12,13 +12,12 @@ Tools::~Tools() {}
 
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
                               const vector<VectorXd> &ground_truth) {
-  //Mukil
+  VectorXd rmse(4);
+  rmse << 0,0,0,0;
+
   if (estimations.size() <= 0 || estimations.size() != ground_truth.size()) {
     return rmse;
   }
-
-  VectorXd rmse(4);
-  rmse << 0,0,0,0;
 
   //Compute sum of squared residuals
   for (int i = 0; i < estimations.size(); i++) {
@@ -34,7 +33,6 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 }
 
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
-  //Mukil
   MatrixXd Hj(3,4);
   //recover state parameters
   float px = x_state(0);
@@ -45,7 +43,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   //check division by zero
   float px2py2 = px * px + py * py;
   if (px2py2 == 0) {
-      cout << "CalculateJacobian () - Error - Division by Zero";
+      std::cout << "CalculateJacobian () - Error - Division by Zero";
       return Hj;
   }
   float px2py2_sq = pow(px2py2, 0.5);
