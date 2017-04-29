@@ -46,8 +46,8 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
       std::cout << "CalculateJacobian () - Error - Division by Zero";
       return Hj;
   }
-  float px2py2_sq = pow(px2py2, 0.5);
-  float px2py2_15 = pow(px2py2, 1.5);
+  float px2py2_sq = sqrt(px2py2);
+  float px2py2_15 = px2py2 * px2py2_sq;
 
   //compute the Jacobian matrix
   Hj(0,0) = px / px2py2_sq;

@@ -114,14 +114,17 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             0, 0, 0, 1;
   
   //Process Noise
-  float t00 = (pow(dt, 4) * pow(noise_ax, 1)) / 4.0f;
-  float t02 = (pow(dt, 3) * pow(noise_ax, 1)) / 2.0f;
-  float t11 = (pow(dt, 4) * pow(noise_ay, 1)) / 4.0f;
-  float t13 = (pow(dt, 3) * pow(noise_ay, 1)) / 2.0f;
-  float t20 = (pow(dt, 3) * pow(noise_ax, 1)) / 2.0f;
-  float t22 = (pow(dt, 2) * pow(noise_ax, 1));
-  float t31 = (pow(dt, 3) * pow(noise_ay, 1)) / 2.0f;
-  float t33 = (pow(dt, 2) * pow(noise_ay, 1));
+  float dt2 = dt * dt;
+  float dt3 = dt2 * dt;
+  float dt4 = dt3 * dt;
+  float t00 = (dt4 * noise_ax) / 4.0f;
+  float t02 = (dt3 * noise_ax) / 2.0f;
+  float t11 = (dt4 * noise_ay) / 4.0f;
+  float t13 = (dt3 * noise_ay) / 2.0f;
+  float t20 = (dt3 * noise_ax) / 2.0f;
+  float t22 = (dt2 * noise_ax);
+  float t31 = (dt3 * noise_ay) / 2.0f;
+  float t33 = (dt2 * noise_ay);
   
   ekf_.Q_ << t00, 0, t02, 0,
             0, t11, 0, t13,
