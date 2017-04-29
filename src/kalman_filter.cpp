@@ -55,7 +55,7 @@ VectorXd CartesianToPolar(const VectorXd &z) {
     phi = atan2(z[1], z[0]);
   }
   float rodot = 0.0f;
-  if (ro != 0) {
+  if (ro > 0.0001) {
     rodot = (z[0] * z[2] + z[1] * z[3]) / ro;
   }
   polar << ro, phi, rodot;
@@ -73,9 +73,8 @@ void KalmanFilter::Update(const VectorXd &z) {
 
 float normalizeAngle(float a) {
   //deterministically running normalization logic
-  float pi = 3.141592653589793f;
-  if (fabs(a > pi)) {
-    a = a - (round(a / (2 * pi)) * (2 * pi));
+  if (fabs(a) > M_PI) {
+    a = a - (round(a / (2 * M_PI)) * (2 * M_PI));
   }
   return a;
 }

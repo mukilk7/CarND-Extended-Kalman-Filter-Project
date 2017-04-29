@@ -124,6 +124,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float dt2 = dt * dt;
   float dt3 = dt2 * dt;
   float dt4 = dt3 * dt;
+
   float t00 = (dt4 * noise_ax) / 4.0f;
   float t02 = (dt3 * noise_ax) / 2.0f;
   float t11 = (dt4 * noise_ay) / 4.0f;
