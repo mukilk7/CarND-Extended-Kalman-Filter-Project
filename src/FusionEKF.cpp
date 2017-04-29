@@ -36,6 +36,10 @@ FusionEKF::FusionEKF() {
 
   //prediction covariance matrix
   ekf_.P_ = MatrixXd(4,4);
+  ekf_.P_ << 1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1000, 0,
+            0, 0, 0, 1000;
 
   //process noise
   ekf_.Q_ = MatrixXd(4,4);
@@ -44,8 +48,8 @@ FusionEKF::FusionEKF() {
               0, 1, 0, 0;
 
   //acceleration noise
-  noise_ax = 9;
-  noise_ay = 9;
+  noise_ax = 9.0f;
+  noise_ay = 9.0f;
 }
 
 /**
@@ -78,9 +82,12 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       */
       float ro = measurement_pack.raw_measurements_[0];
       float phi = measurement_pack.raw_measurements_[1];
+      float rodot = measurement_pack.raw_measurements_[2];
       float px = ro * cos(phi);
       float py = ro * sin(phi);
-      ekf_.x_ << px, py, 0, 0;
+      float vx = rodot * cos(phi);
+      float vy = rodot * sin(phi);
+      ekf_.x_ << px, py, vx, vy;
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       //Get px, py directly from the raw_mesaurements
