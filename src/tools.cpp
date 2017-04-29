@@ -23,9 +23,6 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   for (int i = 0; i < estimations.size(); i++) {
     VectorXd residual = estimations[i] - ground_truth[i];
     residual = residual.array() * residual.array();
-    /*
-    printf("residual = %f, %f, %f, %f\n", residual[0], residual[1], residual[2], residual[3]);
-    */
     rmse = rmse + residual;
   }
   //Average the sum

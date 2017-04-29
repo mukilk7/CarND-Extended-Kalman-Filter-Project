@@ -9,10 +9,9 @@ class KalmanFilter {
 private:
   /**
    * Updates the state by using standard Kalman Filter equations
-   * @param z The measurement value at k+1
-   * @param z_pred The predicted value at k+1
+   * @param y the prediction error
    */
-  void GenericUpdate(const Eigen::VectorXd &z, const Eigen::VectorXd &z_pred);
+  void GenericUpdate(const Eigen::VectorXd &y);
 
 public:
 

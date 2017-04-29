@@ -26,12 +26,11 @@ void KalmanFilter::Predict() {
   P_ = F_ * P_ * Ft + Q_;
 }
 
-void KalmanFilter::GenericUpdate(const VectorXd &z, const VectorXd &z_pred) {
+void KalmanFilter::GenericUpdate(const VectorXd &y) {
   /*
   * Generic kalman filter update function. The z_pred
   * needs to be custom calculated for each filter type.
   */
-  VectorXd y = z - z_pred;
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
   MatrixXd Si = S.inverse();
@@ -70,7 +69,16 @@ void KalmanFilter::Update(const VectorXd &z) {
     * update the state by using Kalman Filter equations
   */
   VectorXd z_pred = H_ * x_;
-  GenericUpdate(z, z_pred);
+  VectorXd y = z - z_pred;
+  GenericUpdate(y);
+}
+
+float normalizeAngle(float a) {
+  float pi = 3.141592653589793f;
+  if (fabs(a > pi)) {
+    a = a - (round(a / (2 * pi)) * (2 * pi));
+  }
+  return a;
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
@@ -78,5 +86,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     * update the state by using Extended Kalman Filter equations
   */
   VectorXd z_pred = CartesianToPolar(x_);
-  GenericUpdate(z, z_pred);
+  VectorXd y = z - z_pred;
+  y[1] = normalizeAngle(y[1]);
+  GenericUpdate(y);
 }
